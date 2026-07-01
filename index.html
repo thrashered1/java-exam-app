@@ -183,3 +183,746 @@
     color: var(--text);
     font-weight: 500;
     margin-bottom: 24px;
+  }
+
+  code, .code-block {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0 20px;
+    overflow-x: auto;
+    line-height: 1.7;
+    color: #c9d1d9;
+    white-space: pre;
+  }
+
+  .kw  { color: #ff79c6; }
+  .ty  { color: #8be9fd; }
+  .val { color: #f1fa8c; }
+  .str { color: #f8b4d9; }
+  .cmt { color: #6272a4; }
+  .fn  { color: #50fa7b; }
+
+  /* OPTIONS */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--surface2);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-align: left;
+    width: 100%;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: #6c63ff0d;
+    transform: translateX(2px);
+  }
+
+  .option-btn:disabled { cursor: default; }
+
+  .option-btn.correct {
+    border-color: var(--green);
+    background: #22c55e12;
+    color: var(--text);
+  }
+
+  .option-btn.wrong {
+    border-color: var(--red);
+    background: #ef444412;
+    color: var(--muted);
+  }
+
+  .option-btn.selected-wrong {
+    border-color: var(--red);
+    background: #ef444418;
+    color: var(--text);
+  }
+
+  .opt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--accent2);
+    background: #6c63ff18;
+    border-radius: 5px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    letter-spacing: 0.05em;
+  }
+
+  .option-btn.correct .opt-label { color: var(--green); background: #22c55e18; }
+  .option-btn.wrong .opt-label,
+  .option-btn.selected-wrong .opt-label { color: var(--red); background: #ef444418; }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+
+  .feedback.show { display: block; }
+
+  .feedback.correct-fb {
+    background: #22c55e0f;
+    border: 1px solid #22c55e30;
+    color: #86efac;
+  }
+
+  .feedback.wrong-fb {
+    background: #ef44440f;
+    border: 1px solid #ef444430;
+    color: #fca5a5;
+  }
+
+  .feedback strong { font-weight: 600; }
+
+  /* NAV BUTTONS */
+  .nav-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    justify-content: flex-end;
+  }
+
+  .btn {
+    padding: 11px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover { background: #7c73ff; transform: translateY(-1px); }
+  .btn-primary:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; transform: none; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+  }
+
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  /* RESULTS */
+  #results-screen {
+    display: none;
+    animation: fadeSlide 0.4s ease;
+  }
+
+  .results-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .results-score-ring {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) calc(var(--pct) * 3.6deg), var(--surface2) 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    position: relative;
+  }
+
+  .results-score-ring::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    background: var(--surface);
+  }
+
+  .results-score-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .results-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .results-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .stat-box.green .stat-num { color: var(--green); }
+  .stat-box.red .stat-num { color: var(--red); }
+  .stat-box.yellow .stat-num { color: var(--yellow); }
+
+  /* REVIEW LIST */
+  .review-section {
+    text-align: left;
+    margin-top: 36px;
+  }
+
+  .review-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .review-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .review-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .review-dot.ok { background: var(--green); }
+  .review-dot.fail { background: var(--red); }
+
+  .review-item-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    flex-shrink: 0;
+    min-width: 24px;
+  }
+
+  .review-item-text { flex: 1; color: var(--text); }
+  .review-item-answer { font-size: 12px; color: var(--muted); }
+
+  /* RESTART */
+  .btn-restart {
+    background: var(--accent);
+    color: white;
+    padding: 13px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.18s;
+    margin-top: 8px;
+  }
+
+  .btn-restart:hover { background: #7c73ff; transform: translateY(-1px); }
+
+  /* MEDAL */
+  .medal { font-size: 52px; margin-bottom: 16px; display: block; }
+
+  @media (max-width: 600px) {
+    .header-inner { gap: 12px; }
+    .progress-wrap { max-width: 200px; }
+    .question-card { padding: 22px 18px; }
+    .results-card { padding: 32px 20px; }
+    .results-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .stat-num { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">Java</div>
+      <div>
+        <div class="logo-text">Тест за изпит</div>
+        <div class="logo-sub">Програмиране с Java — 20 въпроса</div>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="prog-label">Въпрос 1 от 20</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+    <div class="score-badge" id="score-badge">★ 0 / 20</div>
+  </div>
+</header>
+
+<main>
+  <div id="quiz-screen">
+    <div id="question-card" class="question-card"></div>
+    <div class="nav-row">
+      <button class="btn btn-ghost" id="btn-prev" onclick="prevQ()">← Назад</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>Следващ →</button>
+    </div>
+  </div>
+
+  <div id="results-screen">
+    <div class="results-card">
+      <span class="medal" id="medal"></span>
+      <div class="results-score-ring" id="score-ring">
+        <span class="results-score-num" id="score-num"></span>
+      </div>
+      <div class="results-title" id="results-title"></div>
+      <div class="results-sub" id="results-sub"></div>
+      <div class="results-grid">
+        <div class="stat-box green"><div class="stat-num" id="stat-correct">0</div><div class="stat-label">Верни</div></div>
+        <div class="stat-box red"><div class="stat-num" id="stat-wrong">0</div><div class="stat-label">Грешни</div></div>
+        <div class="stat-box yellow"><div class="stat-num" id="stat-pct">0%</div><div class="stat-label">Резултат</div></div>
+      </div>
+      <div class="review-section">
+        <div class="review-title">// Преглед на отговорите</div>
+        <div id="review-list"></div>
+      </div>
+      <button class="btn-restart" onclick="restart()">↺ Опитай пак</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const questions = [
+  {
+    tag: "Основи на Java",
+    text: "Кой орган/организация развива и поддържа езика Java?",
+    options: [
+      "Apple Inc.",
+      "Java Community Process (JCP)",
+      "Java User Group (JUG)",
+      "Oracle Open Source Foundation"
+    ],
+    correct: 1,
+    explanation: "Java се развива от <strong>Java Community Process (JCP)</strong> — общност от компании и разработчици, която дефинира стандартите на езика."
+  },
+  {
+    tag: "Преносимост",
+    text: "Как Java осигурява преносимост на програмите върху различни платформи?",
+    options: [
+      "Компилаторът компилира директно до машинен код за всяка платформа.",
+      "Интерпретаторът интерпретира директно изходния .java код.",
+      "Компилаторът компилира до байт-код, който се изпълнява от JVM на всяка платформа.",
+      "Java не е преносим език."
+    ],
+    correct: 2,
+    explanation: "Java компилирa изходния код до <strong>байт-код (.class файл)</strong>, който е платформонезависим и се изпълнява от <strong>Java Virtual Machine (JVM)</strong> — тя е инсталирана на всяка платформа."
+  },
+  {
+    tag: "Конструктори",
+    text: "Вярно ли е, че ако програмистът не дефинира нито един конструктор, компилаторът автоматично добавя конструктор без параметри?",
+    options: [
+      "Да — компилаторът добавя конструктор по подразбиране само тогава.",
+      "Не — компилаторът не добавя никакъв конструктор автоматично.",
+      "Да — компилаторът добавя конструктор по подразбиране винаги, дори ако има дефинирани конструктори.",
+      "Не — при липса на конструктор не могат да се създават обекти."
+    ],
+    correct: 0,
+    explanation: "Компилаторът добавя конструктор без параметри (по подразбиране) <strong>само ако програмистът не е дефинирал нито един конструктор</strong>. Веднага щом дефинирате свой конструктор, компилаторът спира да добавя автоматичен."
+  },
+  {
+    tag: "Логически оператори",
+    text: `Дадено е: <span class='code-block'><span class='ty'>boolean</span> x = <span class='val'>false</span>;\n<span class='ty'>int</span> a = <span class='val'>0</span>, b = <span class='val'>0</span>;\n<span class='kw'>if</span> (x && (b++ == <span class='val'>1</span>)) { a = <span class='val'>20</span>; } <span class='kw'>else { a = <span class='val'>10</span>; }</span></span>Какви са стойностите на <code>a</code> и <code>b</code> след изпълнение?`,
+    options: [
+      "a = 20, b = 1",
+      "a = 10, b = 1",
+      "a = 10, b = 0",
+      "a = 0, b = 0"
+    ],
+    correct: 2,
+    explanation: "<code>x</code> е <code>false</code> → операторът <code>&&</code> прилага <strong>съкратено изчисление</strong> — десният операнд <code>(b++ == 1)</code> <strong>не се изпълнява</strong>. Затова <code>b</code> остава <strong>0</strong>. Условието е <code>false</code> → влиза в <code>else</code> → <strong>a = 10</strong>."
+  },
+  {
+    tag: "Логически оператори",
+    text: `Дадено е: <span class='code-block'><span class='ty'>boolean</span> x = <span class='val'>true</span>;\n<span class='ty'>int</span> a = <span class='val'>0</span>, b = <span class='val'>0</span>;\n<span class='kw'>if</span> (x | (a++ == <span class='val'>1</span>)) { b = <span class='val'>20</span>; } <span class='kw'>else { b = <span class='val'>10</span>; }</span></span>Какви са стойностите на <code>a</code> и <code>b</code>?`,
+    options: [
+      "a = 0, b = 20",
+      "a = 1, b = 20",
+      "a = 0, b = 10",
+      "a = 1, b = 10"
+    ],
+    correct: 1,
+    explanation: "Тук операторът е <code>|</code> (не <code>||</code>) — <strong>двата операнда се изчисляват винаги</strong>. <code>(a++ == 1)</code> се изпълнява → <code>a</code> се увеличава на <strong>1</strong>. <code>true | false = true</code> → влиза в <code>if</code> → <strong>b = 20</strong>."
+  },
+  {
+    tag: "Switch",
+    text: `Дадено е: <span class='code-block'><span class='ty'>int</span> x = <span class='val'>7</span>, y = <span class='val'>0</span>;\n<span class='kw'>switch</span> (x) {\n  <span class='kw'>case</span> <span class='val'>5</span>: y = <span class='val'>30</span>;\n  <span class='kw'>case</span> <span class='val'>6</span>: y = <span class='val'>40</span>; <span class='kw'>break</span>;\n  <span class='kw'>case</span> <span class='val'>7</span>: y = <span class='val'>50</span>;\n  <span class='kw'>default</span>: y = <span class='val'>60</span>;\n}</span>Каква е стойността на <code>y</code>?`,
+    options: [
+      "y = 50",
+      "y = 40",
+      "y = 60",
+      "y = 0"
+    ],
+    correct: 2,
+    explanation: "Влизаме в <code>case 7: y = 50;</code> — <strong>няма break</strong> → fall-through → изпълнява се <code>default: y = 60;</code>. Резултат: <strong>y = 60</strong>."
+  },
+  {
+    tag: "Цикли",
+    text: "Кои конструкции са итератори (повтарят изпълнение)?",
+    options: [
+      "if, switch, while",
+      "while, do-while, for",
+      "if-else, for, switch",
+      "do-while, if, for"
+    ],
+    correct: 1,
+    explanation: "Итераторите (цикли) в Java са: <strong>while</strong>, <strong>do-while</strong> и <strong>for</strong>. <code>if</code> и <code>switch</code> НЕ са итератори — те изпълняват код най-много веднъж."
+  },
+  {
+    tag: "Цикли — предусловие",
+    text: "Кои са итераторите с ПРЕДУСЛОВИЕ (проверяват условието преди тялото)?",
+    options: [
+      "do-while и for",
+      "while и do-while",
+      "while и for",
+      "само while"
+    ],
+    correct: 2,
+    explanation: "Итератори с предусловие (условието се проверява <strong>преди</strong> тялото): <strong>while</strong> и <strong>for</strong>. <code>do-while</code> е итератор с <strong>постусловие</strong> — тялото се изпълнява поне веднъж."
+  },
+  {
+    tag: "break / continue",
+    text: "Кой оператор прекъсва изпълнението на цикъл изцяло и излиза от него?",
+    options: [
+      "continue",
+      "stop",
+      "return",
+      "break"
+    ],
+    correct: 3,
+    explanation: "<strong>break</strong> прекъсва изпълнението на цикъла (или switch) изцяло и излиза от него. <code>continue</code> прекъсва само текущата итерация и преминава към следващата."
+  },
+  {
+    tag: "Масиви",
+    text: "Кои твърдения са ВЕРНИ за масивите в Java? (Изберете най-пълния верен отговор)",
+    options: [
+      "Масивът е последователност от стойности от един тип, с фиксирана дължина, достъпна чрез .length",
+      "Масивът е последователност от стойности, дължината може да се промени, достъпна чрез .size",
+      "Всеки елемент може да е от различен тип и дължината се получава с .count",
+      "Масивът е примитивен тип данни с нефиксирана дължина"
+    ],
+    correct: 0,
+    explanation: "Масивът е <strong>последователност от стойности от един и същи тип</strong>, <strong>фиксирана дължина</strong> (не може да се промени след създаване), и дължината се достъпва чрез атрибута <strong>.length</strong> (не .size, не .count)."
+  },
+  {
+    tag: "Масиви — инициализация",
+    text: "Кои от следните начина за инициализация на масив са ВАЛИДНИ?",
+    options: [
+      "int[] a = new[5]; и int[] a = {\"4\",\"2\"};",
+      "int[] a = new int[5]; и int[] a = {4, 2, 5, 1};",
+      "int[] a = {4, 2, 5, 1}; и int[] a = new[5];",
+      "само int[] a = new int[5];"
+    ],
+    correct: 1,
+    explanation: "Двата валидни синтаксиса са: <code>int[] a = new int[5];</code> (заделя памет за 5 нули) и <code>int[] a = {4, 2, 5, 1};</code> (литерална инициализация). <code>new[5]</code> е синтактична грешка, а <code>{\"4\",\"2\"}</code> слага String в int[]."
+  },
+  {
+    tag: "Масиви — индекси",
+    text: "За масив `float[] prices = new float[100];` — кой е последният валиден индекс?",
+    options: [
+      "100",
+      "1",
+      "0",
+      "99"
+    ],
+    correct: 3,
+    explanation: "Масив с <code>length = 100</code> има индекси от <strong>0</strong> до <strong>99</strong>. Последният валиден индекс винаги е <code>length - 1</code>. Опит за достъп до индекс 100 хвърля <code>ArrayIndexOutOfBoundsException</code>."
+  },
+  {
+    tag: "Методи — return",
+    text: "С кой оператор се връща резултат от изпълнението на метод?",
+    options: [
+      "break",
+      "continue",
+      "return",
+      "yield"
+    ],
+    correct: 2,
+    explanation: "<strong>return</strong> е операторът, който <strong>връща стойност от метод</strong> и прекъсва изпълнението му. <code>break</code> излиза от цикъл/switch, <code>continue</code> прескача итерация."
+  },
+  {
+    tag: "Методи — void",
+    text: "Кой е правилният начин за метод `void print(String text) { ... }` — какво може да върне?",
+    options: [
+      "return 2;",
+      "return \"текст\";",
+      "return void;",
+      "Не връща стойност (може само return; без аргумент)"
+    ],
+    correct: 3,
+    explanation: "<code>void</code> означава, че методът <strong>не връща стойност</strong>. В него може да се пише само <code>return;</code> (без стойност) за ранно излизане, или да не се пише нищо. <code>return 2;</code>, <code>return \"текст\";</code> и <code>return void;</code> са некоректни."
+  },
+  {
+    tag: "Предаване на параметри",
+    text: "Какъв е механизмът за предаване на параметри при метод `int sum(int a, int b)`?",
+    options: [
+      "Предаване по адрес (референция)",
+      "Предаване по стойност",
+      "Зависи от компилатора",
+      "Методът не приема параметри"
+    ],
+    correct: 1,
+    explanation: "<code>int</code> е <strong>примитивен тип</strong> → предава се <strong>по стойност</strong> (копие). Промените на <code>a</code> и <code>b</code> вътре в метода НЕ засягат оригиналните промеливи. Само масиви и обекти се предават по референция."
+  },
+  {
+    tag: "Сравняване на String",
+    text: "Кой е ПРАВИЛНИЯТ начин за сравняване на съдържанието на два обекта от тип String?",
+    options: [
+      "С оператора ==",
+      "С метода equals()",
+      "И == и equals() дават еднакъв резултат",
+      "Низове не могат да се сравняват"
+    ],
+    correct: 1,
+    explanation: "<code>==</code> сравнява <strong>референции</strong> (адреси), не съдържание — може да даде <code>false</code> дори за два еднакви низа. <strong>equals()</strong> сравнява <strong>съдържанието</strong> символ по символ — правилният начин. За игнориране на регистъра: <code>equalsIgnoreCase()</code>."
+  },
+  {
+    tag: "String — equalsIgnoreCase",
+    text: `Кой метод ще върне <code>true</code> при сравнение на <code>"Иван"</code> с <code>"иван"</code>?`,
+    options: [
+      "==",
+      "equals()",
+      "equalsIgnoreCase()",
+      "Низове не могат да се сравняват"
+    ],
+    correct: 2,
+    explanation: "<strong>equalsIgnoreCase()</strong> сравнява низове без значение на регистъра (главни/малки букви). <code>\"Иван\".equalsIgnoreCase(\"иван\")</code> → <strong>true</strong>. <code>equals()</code> е чувствителен към регистъра и ще върне <code>false</code>."
+  },
+  {
+    tag: "Търсене",
+    text: "Кой алгоритъм за търсене е по-бърз и изисква предварително сортиран масив?",
+    options: [
+      "Линейно търсене — по-бързо, не изисква сортиран масив",
+      "Двоично търсене — по-бързо, не изисква сортиран масив",
+      "Линейно търсене — по-бързо, изисква сортиран масив",
+      "Двоично търсене — по-бързо, изисква сортиран масив"
+    ],
+    correct: 3,
+    explanation: "<strong>Двоичното търсене</strong> е O(log n) — значително по-бързо от линейното O(n). НО изисква масивът да е <strong>предварително сортиран</strong>. Линейното търсене е по-бавно, но работи с несортиран масив."
+  },
+  {
+    tag: "Hash таблици",
+    text: "Как Hash техниките постигат сложност O(1) при търсене?",
+    options: [
+      "С комбинация от Quick Sort и двоично търсене",
+      "С функция, която изчислява приблизителната позиция на елемента",
+      "С функция, която директно изчислява позицията на елемента",
+      "Hash техниките sunt много бавни — с експоненциална сложност"
+    ],
+    correct: 2,
+    explanation: "Hash техниките постигат O(1) чрез <strong>hash функция, която директно изчислява позицията</strong> на елемента в таблицата. Не е нужно търсене — позицията се пресмята математически от ключа."
+  },
+  {
+    tag: "Hash — колизии",
+    text: "Как се разрешава колизия при запис на нова стойност в Hash таблица (linear probing)?",
+    options: [
+      "Извежда се съобщение за грешка",
+      "Автоматично се увеличава размерът на таблицата",
+      "Търси се следващата свободна позиция ПРЕДИ изчислената от hash функцията",
+      "Търси се следващата свободна позиция СЛЕЛ изчислената от hash функцията"
+    ],
+    correct: 3,
+    explanation: "При <strong>колизия</strong> (две стойности на едно място) с метода на линейното опипване (linear probing) се търси <strong>следващата свободна позиция СЛЕД</strong> изчислената от hash функцията — последователно напред, докато се намери свободна клетка."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = new Array(questions.length).fill(null);
+let chosen = new Array(questions.length).fill(null);
+
+const labels = ['А', 'Б', 'В', 'Г'];
+
+function render() {
+  const q = questions[current];
+  const isAnswered = answered[current] !== null;
+
+  document.getElementById('prog-label').textContent = `Въпрос ${current + 1} от ${questions.length}`;
+  const pct = Math.round((current / questions.length) * 100);
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('score-badge').textContent = `★ ${score} / ${questions.length}`;
+  document.getElementById('btn-prev').style.display = current === 0 ? 'none' : '';
+  document.getElementById('btn-next').disabled = !isAnswered;
+  document.getElementById('btn-next').textContent = current === questions.length - 1 ? 'Резултати →' : 'Следващ →';
+
+  let optionsHtml = '';
+  q.options.forEach((opt, i) => {
+    let cls = '';
+    if (isAnswered) {
+      if (i === q.correct) cls = 'correct';
+      else if (i === chosen[current]) cls = 'selected-wrong';
+      else cls = 'wrong';
+    }
+    optionsHtml += `
+      <button class="option-btn ${cls}" onclick="answer(${i})" ${isAnswered ? 'disabled' : ''}>
+        <span class="opt-label">${labels[i]}</span>
+        <span>${opt}</span>
+      </button>`;
+  });
+
+  const wasCorrect = answered[current] === true;
+  const feedbackCls = wasCorrect ? 'correct-fb' : 'wrong-fb';
+  const feedbackIcon = wasCorrect ? '✓' : '✗';
+  const feedbackText = wasCorrect
+    ? `<strong>${feedbackIcon} Правилно!</strong> ${q.explanation}`
+    : `<strong>${feedbackIcon} Грешно.</strong> Верният отговор е <strong>${labels[q.correct]}</strong>. ${q.explanation}`;
+
+  document.getElementById('question-card').innerHTML = `
+    <div class="q-header">
+      <span class="q-num">Въпрос ${current + 1}</span>
+      <span class="q-tag">${q.tag}</span>
+    </div>
+    <div class="q-text">${q.text}</div>
+    <div class="options">${optionsHtml}</div>
+    <div class="feedback ${isAnswered ? 'show ' + feedbackCls : ''}">${isAnswered ? feedbackText : ''}</div>
+  `;
+}
+
+function answer(idx) {
+  if (answered[current] !== null) return;
+  chosen[current] = idx;
+  const correct = idx === questions[current].correct;
+  answered[current] = correct;
+  if (correct) score++;
+  render();
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQ() {
+  if (current < questions.length - 1) {
+    current++;
+    render();
+  } else {
+    showResults();
+  }
+}
+
+function prevQ() {
+  if (current > 0) { current--; render(); }
+}
+
+function showResults() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('results-screen');
+  rs.style.display = 'block';
+
+  const pct = Math.round((score / questions.length) * 100);
+  document.getElementById('score-ring').style.setProperty('--pct', pct);
+  document.getElementById('score-num').textContent = `${score}/${questions.length}`;
+  document.getElementById('stat-correct').textContent = score;
+  document.getElementById('stat-wrong').textContent = questions.length - score;
+  document.getElementById('stat-pct').textContent = pct + '%';
+
+  let medal, title, sub;
+  if (pct === 100) { medal = '🏆'; title = 'Перфектен резултат!'; sub = 'Отличник по Java — готов за изпита!'; }
+  else if (pct >= 80) { medal = '🥇'; title = 'Отличен резултат!'; sub = 'Много добра подготовка. Успех на изпита!'; }
+  else if (pct >= 60) { medal = '🥈'; title = 'Добър резултат'; sub = 'Прегледай грешките и ще си готов!'; }
+  else { medal = '📚'; title = 'Трябва повече практика'; sub = 'Прочети отново теорията и опитай пак.'; }
+
+  document.getElementById('medal').textContent = medal;
+  document.getElementById('results-title').textContent = title;
+  document.getElementById('results-sub').textContent = sub;
+
+  const list = document.getElementById('review-list');
+  list.innerHTML = questions.map((q, i) => {
+    const ok = answered[i] === true;
+    const chosenLabel = chosen[i] !== null ? labels[chosen[i]] : '—';
+    const correctLabel = labels[q.correct];
+    return `
+      <div class="review-item">
+        <div class="review-dot ${ok ? 'ok' : 'fail'}"></div>
+        <span class="review-item-num">${i+1}.</span>
+        <span class="review-item-text">${q.tag}</span>
+        <span class="review-item-answer">${ok ? '✓ ' + correctLabel : chosenLabel + ' → ' + correctLabel}</span>
+      </div>`;
+  }).join('');
+}
+
+function restart() {
+  current = 0; score = 0;
+  answered = new Array(questions.length).fill(null);
+  chosen = new Array(questions.length).fill(null);
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
